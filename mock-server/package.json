@@ -1,0 +1,16 @@
+{
+    "name": "mock-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "db": "json-server -w db.json -p 8080",
+        "tunnel": "ngrok http 8080"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "json-server": "^0.15.1",
+        "ngrok": "^3.2.5"
+    }
+}

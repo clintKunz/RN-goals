@@ -4,11 +4,15 @@ import { createStackNavigator } from "react-navigation-stack";
 import IndexScreen from "./src/screens/IndexScreen";
 import { Provider } from "./src/context/GoalContext";
 import GoalScreen from "./src/screens/GoalScreen";
+import CreateScreen from "./src/screens/CreateScreen";
+import EditScreen from "./src/screens/EditScreen";
 
 const navigator = createStackNavigator(
     {
         Index: IndexScreen,
-        Goal: GoalScreen
+        Goal: GoalScreen,
+        Create: CreateScreen,
+        Edit: EditScreen
     },
     {
         initialRouteName: "Index",

@@ -9,16 +9,24 @@ const GoalScreen = ({ navigation }) => {
     const goal = state.find(goal => goal.id === navigation.getParam("id"));
     return (
         <View>
-            <Text>{goal.title}</Text>
+            <Text>
+                {goal.title} - {goal.description}
+            </Text>
         </View>
     );
 };
 
-GoalScreen.navigationOptions = () => {
+GoalScreen.navigationOptions = ({ navigation }) => {
     return {
         headerRight: (
-            <TouchableOpacity>
-                <EvilIcons name="pencil" size={35} />
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate("Edit", {
+                        id: navigation.getParam("id")
+                    })
+                }
+            >
+                <EvilIcons name="pencil" size={40} style={{ marginRight: 5 }} />
             </TouchableOpacity>
         )
     };

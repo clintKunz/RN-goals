@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import {
     View,
     Text,
@@ -11,11 +11,22 @@ import { EvilIcons } from "@expo/vector-icons";
 import { Context as GoalContext } from "../context/GoalContext";
 
 const IndexScreen = ({ navigation }) => {
-    const { state, addGoal, deleteGoal } = useContext(GoalContext);
+    const { state, deleteGoal, getGoals } = useContext(GoalContext);
+
+    useEffect(() => {
+        getGoals();
+
+        const listener = navigation.addListener("didFocus", () => {
+            getGoals();
+        });
+
+        return () => {
+            listener.remove();
+        };
+    }, []);
 
     return (
-        <View>
-            <Button title="Add Goal" onPress={addGoal} />
+        <View style={{ marginTop: 20 }}>
             <FlatList
                 data={state}
                 keyExtractor={goal => goal.id}
@@ -43,6 +54,16 @@ const IndexScreen = ({ navigation }) => {
             />
         </View>
     );
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+                <EvilIcons name="plus" size={35} style={{ marginRight: 10 }} />
+            </TouchableOpacity>
+        )
+    };
 };
 
 const styles = StyleSheet.create({
