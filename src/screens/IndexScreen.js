@@ -11,7 +11,14 @@ import { EvilIcons } from "@expo/vector-icons";
 import { Context as GoalContext } from "../context/GoalContext";
 
 const IndexScreen = ({ navigation }) => {
-    const { state, deleteGoal, getGoals } = useContext(GoalContext);
+    const { state, deleteGoal, getGoals, toggleGoal } = useContext(GoalContext);
+
+    const colorObj = {
+        "Spiritual": "#1C99AA",
+        "Social": "#B1A918",
+        "Physical": "#C83C47",
+        "Intellectual": "#DA752F"
+    };
 
     useEffect(() => {
         getGoals();
@@ -37,8 +44,12 @@ const IndexScreen = ({ navigation }) => {
                                 navigation.navigate("Goal", { id: item.id })
                             }
                         >
-                            <View style={styles.row}>
-                                <Text style={styles.title}>{item.title}</Text>
+                            <View style={[styles.row, { backgroundColor: colorObj[item.category] }]}>
+                                <Text style={[styles.title, { textDecorationLine: item.completed ? 'line-through' : 'none' }]}>{item.title}</Text>
+                                <View>
+                                <TouchableOpacity onPress={() => toggleGoal(item.id, item)}>
+                                    <EvilIcons name="check" style={styles.icon} />
+                                </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => deleteGoal(item.id)}
                                 >
@@ -47,6 +58,7 @@ const IndexScreen = ({ navigation }) => {
                                         style={styles.icon}
                                     />
                                 </TouchableOpacity>
+                                </View>
                             </View>
                         </TouchableOpacity>
                     );
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     icon: {
-        fontSize: 30
+        fontSize: 40
     }
 });
 

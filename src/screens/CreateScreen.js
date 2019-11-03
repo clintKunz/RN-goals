@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button, Picker } from "react-native";
 import { Context } from "../context/GoalContext";
 
 const CreateScreen = ({ navigation }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [category, setCategory] = useState("Spiritual");
     const { addGoal } = useContext(Context);
 
     return (
@@ -21,10 +22,19 @@ const CreateScreen = ({ navigation }) => {
                 onChangeText={description => setDescription(description)}
                 style={styles.input}
             />
+            <Picker
+                selectedValue={category}
+                style={{ height: 50, width: 100 }}
+                onValueChange={category => setCategory(category)}>
+                <Picker.Item label="Spiritual" value="Spiritual" />
+                <Picker.Item label="Social" value="Social" />
+                <Picker.Item label="Physical" value="Physical" />
+                <Picker.Item label="Intellectual" value="Intellectual" />
+            </Picker>
             <Button
                 title="Add Goal"
                 onPress={() => {
-                    addGoal(title, description, () => {
+                    addGoal(title, description, category, () => {
                         navigation.navigate("Index");
                     });
                 }}

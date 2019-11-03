@@ -1,9 +1,25 @@
 {
   "goals": [
     {
-      "title": "goal2s",
-      "description": "hi",
-      "id": "1"
+      "title": "Read Scriptures",
+      "description": "For 30 minutes everyday this week",
+      "category": "Spiritual",
+      "id": "25rT2sM",
+      "completed": false
+    },
+    {
+      "title": "Talk to new neighbors",
+      "description": "Take cookies or a small gift",
+      "category": "Social",
+      "id": "wrUp8e5",
+      "completed": false
+    },
+    {
+      "title": "Push ups",
+      "description": "40 a day",
+      "category": "Physical",
+      "id": "tKaz_ev",
+      "completed": false
     }
   ]
 }

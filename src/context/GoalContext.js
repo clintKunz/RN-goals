@@ -11,6 +11,8 @@ const goalReducer = (state, action) => {
             return state.map(goal =>
                 goal.id === action.payload.id ? action.payload : goal
             );
+        case "complete_goal":
+            return state.map(goal => goal.id === action.payload.id ? action.payload : goal);
         default:
             return state;
     }
@@ -24,11 +26,13 @@ const getGoals = dispatch => {
 };
 
 const addGoal = dispatch => {
-    return async (title, description, callback) => {
+    return async (title, description, category, callback) => {
         try {
             const response = await jsonServer.post("/goals", {
                 title,
-                description
+                description,
+                category,
+                completed: false
             });
             if (callback) callback();
         } catch (err) {
@@ -60,8 +64,20 @@ const updateGoal = dispatch => {
     };
 };
 
+const toggleGoal = dispatch => {
+    return async (id, goal, callback) => {
+        try {
+            const response = await jsonServer.put(`/goals/${id}`, { ...goal, completed: !goal.completed })
+            dispatch({ type: "complete_goal", payload: { id, ...goal, completed: !goal.completed } })
+            if (callback) callback();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
 export const { Context, Provider } = createDataContext(
     goalReducer,
-    { getGoals, addGoal, deleteGoal, updateGoal },
+    { getGoals, addGoal, deleteGoal, updateGoal, toggleGoal },
     []
 );
